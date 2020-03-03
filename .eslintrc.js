@@ -22,52 +22,43 @@ module.exports = {
         }
     },
     "rules": {
-        "no-bitwise": "error",
-        "curly": "error",
-        "eqeqeq": "error",
-        "guard-for-in": "error",
-        "no-extend-native": "error",
+        "no-bitwise": "warn",
+        "curly": "warn",
+        "eqeqeq": "warn",
+        "guard-for-in": "warn",
+        "no-extend-native": "warn",
         "no-inner-declarations": "off",
-        "no-use-before-define": ["error", "nofunc"],
-        "no-caller": "error",
-        "no-sequences": "error",
-        "no-irregular-whitespace": "error",
-        "no-new": "error",
-        "no-shadow": "error",
-        "no-undef": "error",
+        "no-use-before-define": ["warn", "nofunc"],
+        "no-caller": "warn",
+        "no-sequences": "warn",
+        "no-irregular-whitespace": "warn",
+        "no-new": "warn",
+        "no-shadow": "warn",
+        "no-undef": "warn",
         "no-unused-vars": [
-            "error",
+            "warn",
             {
                 "vars": "all",
                 "args": "none"
             }
         ],
         "no-console": "off",
-        "no-trailing-spaces": "error",
-        "space-before-function-paren": [
-            "error",
-            {
-                "anonymous": "always",
-                "asyncArrow": "always",
-                "named": "never",
-            }
-        ],
-        "array-bracket-spacing": "error",
-        "space-in-parens": "error",
-        "space-before-blocks": "error",
-        "comma-dangle": "error",
-        "eol-last": "error",
+        "no-trailing-spaces": "warn",
+        "array-bracket-spacing": "warn",
+        "space-in-parens": "warn",
+        "space-before-blocks": "warn",
+        "comma-dangle": "warn",
+        "eol-last": "warn",
         "new-cap": [
-            "error",
+            "warn",
             {
                 "capIsNew": false,
                 "properties": false
             }
         ],
-        "dot-notation": "error",
-        "indent": ["error", 4],
+        "dot-notation": "warn",
         "vue/html-indent": [
-            "error",
+            "warn",
             4,
             {
                 "attribute": 1,
@@ -77,7 +68,7 @@ module.exports = {
                 "ignores": []
             }
         ],
-        "vue/html-self-closing": ["error",
+        "vue/html-self-closing": ["warn",
             {
                 "html": {
                     "void": "never",
@@ -88,7 +79,7 @@ module.exports = {
                 "math": "always"
             }
         ],
-        "vue/max-attributes-per-line": ["error", {
+        "vue/max-attributes-per-line": ["warn", {
             "singleline": 1,
             "multiline": {
                 "max": 1,
