@@ -1,15 +1,38 @@
 import { getDictionary } from './plugin.js';
 
-export function getObjectProvider(namespace, key) {
+export class ObjectProvider {
+  constructor(openmct, namespace, key, url) {
+    this._openmct = openmct;
+    this._namespace = namespace;
+    this._key = key;
+    this._url = url;
+  }
+
+  addProvider() {
+    this._openmct.objects.addProvider(
+      this._namespace,
+      getObjectProvider(this._namespace, this._key, this._url)
+    );
+  }
+
+  addRoot() {
+    this._openmct.objects.addRoot({
+      namespace: this._namespace,
+      key: this._key
+    });
+  }
+}
+
+function getObjectProvider(namespace, key, url) {
   return {
     get: function(identifier) {
-      return getMetadata(identifier, namespace, key);
+      return getMetadata(identifier, namespace, key, url);
     }
   };
 }
 
-function getMetadata(identifier, namespace, key) {
-  return getDictionary(namespace).then(dictionary =>
+function getMetadata(identifier, namespace, key, url) {
+  return getDictionary(url).then(dictionary =>
     defineMetadata(identifier, namespace, key, dictionary)
   );
 }
@@ -19,7 +42,7 @@ function defineMetadata(identifier, namespace, key, dictionary) {
     return {
       identifier: identifier,
       name: dictionary.name,
-      type: 'folder',
+      type: 'satellite',
       location: 'ROOT'
     };
   } else {

@@ -1,22 +1,28 @@
 import axios from 'axios';
-import { parseNamespace } from '../telemetry-dictionary/plugin';
 
-export default function HistoricalTelemetry() {
+export default function HistoricalTelemetry(urlBase) {
   return function install(openmct) {
-    var provider = {
-      supportsRequest: function(domainObject) {
-        return domainObject.type === 'sat.telemetry';
-      },
-      request: function(domainObject, options) {
-        const name = parseNamespace(domainObject.identifier.namespace);
-        var url = `http://192.168.1.183:8000/API/TlmyVarList/${name}.${domainObject.name}/${options.start}/${options.end}`;
-
-        return axios.get(url).then(function(resp) {
-          return resp.data;
-        });
-      }
-    };
-
+    var provider = getProvider(urlBase);
     openmct.telemetry.addProvider(provider);
   };
+}
+
+function getProvider(urlBase) {
+  return {
+    supportsRequest: function(domainObject) {
+      return domainObject.type === 'sat.telemetry';
+    },
+    request: function(domainObject, options) {
+      const name = parseNamespace(domainObject.identifier.namespace);
+      var url = `${urlBase}${name}.${domainObject.name}/${options.start}/${options.end}`;
+
+      return axios.get(url).then(function(resp) {
+        return resp.data;
+      });
+    }
+  };
+}
+
+function parseNamespace(namespace) {
+  return namespace.replace('.telemetry', '');
 }

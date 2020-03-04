@@ -130,10 +130,23 @@
       description: 'Telemetry point for every satellite',
       cssClass: 'icon-telemetry'
     });
-    for (let i = 0; i < satTable.length; i++) {
-      openmct.install(openmct.plugins.TelemetryDictionaryPlugin(satTable[i].name, satTable[i].key));
+    openmct.types.addType('satellite', {
+      name: 'Satellite folder',
+      description: 'Satellite folder where telemetry points will be',
+      cssClass: 'icon-object'
+    });
+    for (let sat of satTable) {
+      openmct.install(
+        openmct.plugins.TelemetryDictionaryPlugin(
+          sat.name,
+          sat.key,
+          'http://192.168.1.183:8000/API/TlmyVarDict/' + sat.name
+        )
+      );
     }
-    openmct.install(openmct.plugins.HistoricalTelemetryPlugin());
+    openmct.install(
+      openmct.plugins.HistoricalTelemetryPlugin('http://192.168.1.183:8000/API/TlmyVarList/')
+    );
     openmct.start();
   </script>
 </html>
