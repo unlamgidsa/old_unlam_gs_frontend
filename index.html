@@ -10,7 +10,7 @@
 
  Unless required by applicable law or agreed to in writing, software
  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ WsatTableANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  License for the specific language governing permissions and limitations
  under the License.
 
@@ -107,24 +107,6 @@
       openmct.plugins.ClearData(['table', 'telemetry.plot.overlay', 'telemetry.plot.stacked'])
     );
 
-    const satTable = [
-      {
-        name: 'SACD',
-        key: 'satellite'
-      },
-      {
-        name: 'TITA',
-        key: 'satellite'
-      },
-      {
-        name: 'FS2017',
-        key: 'satellite'
-      },
-      {
-        name: 'LITUANICASAT2',
-        key: 'satellite'
-      }
-    ];
     openmct.types.addType('sat.telemetry', {
       name: 'Telemetry type',
       description: 'Telemetry point for every satellite',
@@ -135,15 +117,18 @@
       description: 'Satellite folder where telemetry points will be',
       cssClass: 'icon-object'
     });
-    for (let sat of satTable) {
-      openmct.install(
-        openmct.plugins.TelemetryDictionaryPlugin(
-          sat.name,
-          sat.key,
-          'http://192.168.1.183:8000/API/TlmyVarDict/' + sat.name
-        )
-      );
-    }
+    openmct.plugins.SatelliteNames().then(satellites => {
+      for (let sat of satellites) {
+        openmct.install(
+          openmct.plugins.TelemetryDictionaryPlugin(
+            sat.name,
+            sat.key,
+            'http://192.168.1.183:8000/API/TlmyVarDict/' + sat.name
+          )
+        );
+      }
+    });
+
     openmct.install(
       openmct.plugins.HistoricalTelemetryPlugin('http://192.168.1.183:8000/API/TlmyVarList/')
     );

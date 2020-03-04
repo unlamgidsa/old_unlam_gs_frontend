@@ -52,6 +52,7 @@ define([
   './UNLaM-plugins/telemetry-dictionary/plugin',
   './UNLaM-plugins/historical-telemetry/plugin',
   './UNLaM-plugins/realtime-telemetry/plugin',
+  './UNLaM-plugins/telemetry-dictionary/satellite-names',
   './themes/snow'
 ], function(
   _,
@@ -85,6 +86,7 @@ define([
   TelemetryDictionaryPlugin,
   HistoricalTelemtry,
   RealtimeTelemetry,
+  SatelliteNames,
   Snow
 ) {
   var bundleMap = {
@@ -194,6 +196,7 @@ define([
   plugins.TelemetryDictionaryPlugin = TelemetryDictionaryPlugin.default;
   plugins.HistoricalTelemetryPlugin = HistoricalTelemtry.default;
   plugins.RealtimeTelemetryPlugin = RealtimeTelemetry.default;
+  plugins.SatelliteNames = SatelliteNames.default;
 
   return plugins;
 });
