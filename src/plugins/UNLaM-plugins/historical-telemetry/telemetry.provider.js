@@ -7,24 +7,24 @@ export class TelemetryProvider {
   }
 
   addProvider() {
-    this._openmct.telemetry.addProvider(this.getProvider());
+    this._openmct.telemetry.addProvider(getProvider(this._urlBase));
   }
+}
 
-  getProvider() {
-    return {
-      supportsRequest: function(domainObject) {
-        return domainObject.type === 'sat.telemetry';
-      },
-      request: function(domainObject, options) {
-        const name = parseNamespace(domainObject.identifier.namespace);
-        var url = `${this._urlBase}${name}.${domainObject.name}/${options.start}/${options.end}`;
+function getProvider(urlBase) {
+  return {
+    supportsRequest: function(domainObject) {
+      return domainObject.type === 'sat.telemetry';
+    },
+    request: function(domainObject, options) {
+      const name = parseNamespace(domainObject.identifier.namespace);
+      var url = `${urlBase}${name}.${domainObject.name}/${options.start}/${options.end}`;
 
-        return axios.get(url).then(function(resp) {
-          return resp.data;
-        });
-      }
-    };
-  }
+      return axios.get(url).then(function(resp) {
+        return resp.data;
+      });
+    }
+  };
 }
 
 function parseNamespace(namespace) {
