@@ -117,23 +117,22 @@
       description: 'Satellite folder where telemetry points will be',
       cssClass: 'icon-object'
     });
-    openmct.plugins
-      .SatelliteNames('http://192.168.1.183:8000/API/SatelliteList')
-      .then(satellites => {
-        for (let sat of satellites) {
-          openmct.install(
-            openmct.plugins.TelemetryDictionaryPlugin(
-              sat.name,
-              sat.key,
-              'http://192.168.1.183:8000/API/TlmyVarDict/' + sat.name
-            )
-          );
-        }
-      });
 
-    openmct.install(
-      openmct.plugins.HistoricalTelemetryPlugin('http://192.168.1.183:8000/API/TlmyVarList/')
-    );
+    const urlBase = 'http://192.168.1.183:8000/API/';
+
+    openmct.plugins.SatelliteNames(urlBase + 'SatelliteList').then(satellites => {
+      for (let sat of satellites) {
+        openmct.install(
+          openmct.plugins.TelemetryDictionaryPlugin(
+            sat.name,
+            sat.key,
+            urlBase + 'TlmyVarDict/' + sat.name
+          )
+        );
+      }
+    });
+
+    openmct.install(openmct.plugins.HistoricalTelemetryPlugin(urlBase + 'TlmyVarList/'));
     openmct.start();
   </script>
 </html>
