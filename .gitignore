@@ -4,6 +4,8 @@
 *.tgz
 *.DS_Store
 *.swp
+.vscode
+*.code-workspace
 
 # Compiled CSS, unless directly added
 *.sass-cache
