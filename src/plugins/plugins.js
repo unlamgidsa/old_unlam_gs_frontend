@@ -55,6 +55,7 @@ define([
   './UNLaM-plugins/telemetry-dictionary/satellite-names',
   './themes/snow',
   '../../example/simpleVuePlugin/plugin',
+  './login/plugin',
   
 ], function(
   _,
@@ -90,7 +91,8 @@ define([
   RealtimeTelemetry,
   SatelliteNames,
   Snow,
-  SimpleVuePlugin
+  SimpleVuePlugin,
+  Login
 ) {
   var bundleMap = {
     LocalStorage: 'platform/persistence/local',
@@ -112,7 +114,9 @@ define([
   plugins.ImportExport = ImportExport;
 
   plugins.StaticRootPlugin = StaticRootPlugin;
+  
   plugins.SimpleVuePlugin = SimpleVuePlugin.default;
+  plugins.Login = Login;
   /**
    * A tabular view showing the latest values of multiple telemetry points at
    * once. Formatted so that labels and values are aligned.
