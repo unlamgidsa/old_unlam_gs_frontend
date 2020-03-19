@@ -34,6 +34,7 @@ define([
         if (!splash) {
             return;
         }
+
         splash.className += ' fadeout';
         splash.addEventListener('transitionend', function () {
             splash.parentNode.removeChild(splash);

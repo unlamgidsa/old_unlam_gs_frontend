@@ -36,11 +36,14 @@
   </head>
   <body></body>
   <script>
+   
+
     const FIVE_MINUTES = 5 * 60 * 1000;
     const THIRTY_MINUTES = 30 * 60 * 1000;
 
     ['example/eventGenerator'].forEach(openmct.legacyRegistry.enable.bind(openmct.legacyRegistry));
 
+    openmct.install(openmct.plugins.SimpleVuePlugin())
     openmct.install(openmct.plugins.Espresso());
     openmct.install(openmct.plugins.MyItems());
     openmct.install(openmct.plugins.LocalStorage());
@@ -100,7 +103,7 @@
       cssClass: 'icon-object'
     });
 
-    const urlBase = 'http://192.168.1.183:8000/API/';
+    const urlBase = 'http://127.0.0.1:8000/API/';
 
     openmct.plugins.SatelliteNames(urlBase + 'SatelliteList').then(satellites => {
       for (let sat of satellites) {
