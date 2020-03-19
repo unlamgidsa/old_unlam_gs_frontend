@@ -6,6 +6,7 @@ export default function NewSatellitePlugin() {
     openmct.types.addType('new-satellite', {
       name: 'Create new satellite',
       description: 'A way to create a satellite instance from webApp',
+      cssClass: 'icon-pencil',
       creatable: false
     });
     openmct.objects.addRoot({
