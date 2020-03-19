@@ -56,7 +56,7 @@ define([
   './themes/snow',
   '../../example/simpleVuePlugin/plugin',
   './login/plugin',
-  
+  './UNLaM-plugins/new-satellite/plugin'
 ], function(
   _,
   UTCTimeSystem,
@@ -92,7 +92,8 @@ define([
   SatelliteNames,
   Snow,
   SimpleVuePlugin,
-  Login
+  Login,
+  NewSatellitePlugin
 ) {
   var bundleMap = {
     LocalStorage: 'platform/persistence/local',
@@ -114,7 +115,7 @@ define([
   plugins.ImportExport = ImportExport;
 
   plugins.StaticRootPlugin = StaticRootPlugin;
-  
+
   plugins.SimpleVuePlugin = SimpleVuePlugin.default;
   plugins.Login = Login;
   /**
@@ -204,6 +205,7 @@ define([
   plugins.HistoricalTelemetryPlugin = HistoricalTelemtry.default;
   plugins.RealtimeTelemetryPlugin = RealtimeTelemetry.default;
   plugins.SatelliteNames = SatelliteNames.default;
+  plugins.NewSatellitePlugin = NewSatellitePlugin.default;
 
   return plugins;
 });
