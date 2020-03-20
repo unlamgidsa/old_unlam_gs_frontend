@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Vue from 'vue';
 import NewSatellite from './NewSatellite.vue';
+
 export default function NewSatellitePlugin() {
   return function install(openmct) {
     openmct.types.addType('new-satellite', {

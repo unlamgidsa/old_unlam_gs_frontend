@@ -91,7 +91,7 @@
       openmct.plugins.ClearData(['table', 'telemetry.plot.overlay', 'telemetry.plot.stacked'])
     );
 
-    openmct.install(openmct.plugins.Login());
+    openmct.install(openmct.plugins.Login(['new-satellite']));
 
     openmct.types.addType('sat.telemetry', {
       name: 'Telemetry type',
