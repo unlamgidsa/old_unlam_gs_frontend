@@ -41,7 +41,6 @@
 
     ['example/eventGenerator'].forEach(openmct.legacyRegistry.enable.bind(openmct.legacyRegistry));
 
-    openmct.install(openmct.plugins.SimpleVuePlugin());
     openmct.install(openmct.plugins.Espresso());
     openmct.install(openmct.plugins.MyItems());
     openmct.install(openmct.plugins.LocalStorage());
@@ -91,7 +90,6 @@
       openmct.plugins.ClearData(['table', 'telemetry.plot.overlay', 'telemetry.plot.stacked'])
     );
 
-    openmct.install(openmct.plugins.Login(['new-satellite']));
 
     openmct.types.addType('sat.telemetry', {
       name: 'Telemetry type',
@@ -118,6 +116,7 @@
       }
     });
 
+		openmct.install(openmct.plugins.Login(['new-satellite']));
     openmct.install(openmct.plugins.NewSatellitePlugin());
 
     openmct.install(openmct.plugins.HistoricalTelemetryPlugin(urlBase + 'TlmyVarList/'));
