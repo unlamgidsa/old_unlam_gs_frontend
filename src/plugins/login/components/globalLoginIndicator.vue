@@ -7,20 +7,14 @@
 </template>
 
 <script>
-import axios from 'axios';
-import APIKey from '../api.js';
 import showForm from '../form/form.js';
+import { EventBus } from '../event-bus.js';
+
+
 export default {
 	inject: ['openmct'],
 	methods: {
 		globalLoginEmit() {
-			axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + APIKey(), {
-				email: 'test4@test.com',
-				password: '123456',
-				returnSecureToken: true
-			}).then(response => {
-				this.username = response.data.email;
-			});
 			showForm(openmct);
 		}
 	},
@@ -28,6 +22,11 @@ export default {
 		return {
 			username: 'Change user'
 		};
+	},
+	mounted() {
+		EventBus.$on('username', usr => {
+				this.username = usr;
+		});
 	}
 }
 </script>
