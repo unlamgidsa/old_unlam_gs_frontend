@@ -19,13 +19,14 @@ export default {
 	inject: ['openmct'],
 	data() {
 		return {
-			username: 'Prueba',
+			username: '',
 			password: ''
 		};
 	},
 	methods: {
 		onSubmit() {
 			EventBus.$emit('username',this.username);
+			openmct.overlays.dismissLastOverlay();
 		},
 	}
 }
