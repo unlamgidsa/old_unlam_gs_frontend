@@ -9,6 +9,7 @@
 <script>
 import axios from 'axios';
 import APIKey from '../api.js';
+import showForm from '../form/form.js';
 export default {
 	inject: ['openmct'],
 	methods: {
@@ -20,6 +21,7 @@ export default {
 			}).then(response => {
 				this.username = response.data.email;
 			});
+			showForm(openmct);
 		}
 	},
 	data() {
