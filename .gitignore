@@ -6,6 +6,8 @@
 *.swp
 .vscode
 *.code-workspace
+tags
+src/plugins/login/api.js
 
 # Compiled CSS, unless directly added
 *.sass-cache

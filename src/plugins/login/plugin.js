@@ -1,35 +1,34 @@
 define([
-    './components/globalLoginIndicator.vue',
-    './loginAction',
-    'vue'
+	'./components/globalLoginIndicator.vue',
+	'./loginAction',
+	'vue',
 ], function (
-    GlobalLoginIndicator,
-    LoginAction,
-    Vue
+	GlobalLoginIndicator,
+	LoginAction,
+	Vue,
 ) {
-    return function plugin(appliesToObjects) {
-        //appliesToObjects = appliesToObjects || [];
+	return function plugin(appliesToObjects) {
 
-        return function install(openmct) {
-            
-            let component = new Vue ({
-                    provide: {
-                        openmct
-                    },
-                    components: {
-                        GlobalLoginIndicator:GlobalLoginIndicator.default
-                    },
-                    template: '<GlobalLoginIndicator></GlobalLoginIndicator>'
-                }),
-                indicator = {
-                    element: component.$mount().$el
-                };
+		return function install(openmct) {
 
-            openmct.indicators.add(indicator);
+			let component = new Vue ({
+				provide: {
+					openmct
+				},
+				components: {
+					GlobalLoginIndicator:GlobalLoginIndicator.default
+				},
+				template: '<GlobalLoginIndicator></GlobalLoginIndicator>'
+			}),
+				indicator = {
+					element: component.$mount().$el
+				};
 
-            openmct.contextMenu.registerAction(new LoginAction.default(openmct, appliesToObjects));
-            
-           console.log("Login action installed!")
-        };
-    };
+			openmct.indicators.add(indicator);
+
+			//openmct.contextMenu.registerAction(new LoginAction.default(openmct, appliesToObjects));
+
+			console.log("Login action installed!")
+		};
+	};
 });

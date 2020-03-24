@@ -198,6 +198,7 @@ input, textarea {
 
 input[type=text],
 input[type=search],
+input[type=password],
 input[type=number],
 textarea {
     @include reactive-input();

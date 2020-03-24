@@ -12,8 +12,6 @@ export default class LoginAction {
         console.log("Login press");
     }
     appliesTo(objectPath) {
-        //let contextualDomainObject = objectPath[0];
-
-        return null; //this._appliesToObjects.filter(type => contextualDomainObject.type === type).length;
+			return this._appliesToObjects.includes(objectPath[0].type);
     }
 }
