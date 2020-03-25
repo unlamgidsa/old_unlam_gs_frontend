@@ -20,15 +20,13 @@ define([
 				},
 				template: '<GlobalLoginIndicator></GlobalLoginIndicator>'
 			}),
-				indicator = {
+				loginIndicator = {
 					element: component.$mount().$el
 				};
 
-			openmct.indicators.add(indicator);
+			openmct.indicators.add(loginIndicator);
 
 			//openmct.contextMenu.registerAction(new LoginAction.default(openmct, appliesToObjects));
-
-			console.log("Login action installed!")
 		};
 	};
 });

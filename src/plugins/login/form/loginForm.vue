@@ -28,6 +28,11 @@ export default {
 			EventBus.$emit('username',this.username);
 			openmct.overlays.dismissLastOverlay();
 		},
+	},
+	mounted() {
+		EventBus.$on('username-logout', usr => {
+			this.username = usr;
+		})
 	}
 }
 </script>
