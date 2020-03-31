@@ -16,14 +16,14 @@ export default function NewSatellitePlugin() {
     });
     openmct.objects.addProvider('new-satellite', {
       get: function(identifier) {
-        return axios.get('').then(value => {
-          return {
-            identifier: identifier,
-            name: 'Create new satellite',
-            type: 'new-satellite',
-            location: 'ROOT'
-          };
-        });
+				return new Promise(function(resolve, reject) {
+					resolve({
+						identifier: identifier,
+						name: 'Create new satellite',
+						type: 'new-satellite',
+						location: 'ROOT'
+					});
+				});
       }
     });
     openmct.objectViews.addProvider({
