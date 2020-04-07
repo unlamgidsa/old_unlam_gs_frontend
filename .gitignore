@@ -8,6 +8,9 @@
 *.code-workspace
 tags
 src/plugins/login/api.js
+.firebase/
+.firebaserc
+firebase.json
 
 # Compiled CSS, unless directly added
 *.sass-cache
