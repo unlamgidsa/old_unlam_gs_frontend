@@ -98,7 +98,8 @@ define([
   var bundleMap = {
     LocalStorage: 'platform/persistence/local',
     MyItems: 'platform/features/my-items',
-    CouchDB: 'platform/persistence/couch'
+    CouchDB: 'platform/persistence/couch',
+		ExamplePersistance: 'src/plugins/UNLaM-plugins/LRStorage'
   };
 
   var plugins = _.mapValues(bundleMap, function(bundleName, pluginName) {
