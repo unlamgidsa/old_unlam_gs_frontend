@@ -13,9 +13,11 @@ define(
 		 * @param $interval Angular's $interval service
 		 * @param {string} space the name of the persistence space being served
 		 */
-		function LocalStoragePersistenceProvider($window, $q, space) {
+		function LocalStoragePersistenceProvider($window, $q, $http, space, url) {
 			this.$q = $q;
+			this.$http = $http;
 			this.space = space;
+			this.url = url;
 			this.spaces = space ? [space] : [];
 			this.localStorage = $window.localStorage;
 		}
@@ -26,7 +28,14 @@ define(
 		 */
 		LocalStoragePersistenceProvider.prototype.setValue = function (key, value) {
 			this.localStorage[key] = JSON.stringify(value);
-			console.log("Se acaba de guardar un objeto");
+			this.$http({
+				method: "PUT",
+				url: this.url,
+				data: value
+			}).then(response => {
+				console.log("Se acaba de guardar un objeto en la url " + this.url);
+				console.log(response);
+			});
 		};
 
 		/**
@@ -34,7 +43,12 @@ define(
 		 * @private
 		 */
 		LocalStoragePersistenceProvider.prototype.getValue = function (key) {
-			console.log("Se acaba de obtener un objeto");
+			this.$http({
+				method: "GET",
+				url: this.url
+			}).then(response => {
+				this.localStorage[key] = JSON.stringify(response.data);
+			});
 			return this.localStorage[key] ?
 				JSON.parse(this.localStorage[key]) : {};
 		};
