@@ -32,25 +32,7 @@ define(
 				method: "PUT",
 				url: this.url,
 				data: value
-			}).then(response => {
-				console.log("Se acaba de guardar un objeto en la url " + this.url);
-				console.log(response);
 			});
-		};
-
-		/**
-		 * Get a value from local storage.
-		 * @private
-		 */
-		LocalStoragePersistenceProvider.prototype.getValue = function (key) {
-			this.$http({
-				method: "GET",
-				url: this.url
-			}).then(response => {
-				this.localStorage[key] = JSON.stringify(response.data);
-			});
-			return this.localStorage[key] ?
-				JSON.parse(this.localStorage[key]) : {};
 		};
 
 		LocalStoragePersistenceProvider.prototype.listSpaces = function () {
@@ -69,8 +51,13 @@ define(
 		};
 
 		LocalStoragePersistenceProvider.prototype.readObject = function (space, key) {
-			var spaceObj = this.getValue(space);
-			return this.$q.when(spaceObj[key]);
+			return this.$http({
+				method: "GET",
+				url: this.url
+			}).then(response => {
+				this.localStorage[space] = JSON.stringify(response.data);
+				return response.data[key];
+			});
 		};
 
 		LocalStoragePersistenceProvider.prototype.deleteObject = function (space, key) {
