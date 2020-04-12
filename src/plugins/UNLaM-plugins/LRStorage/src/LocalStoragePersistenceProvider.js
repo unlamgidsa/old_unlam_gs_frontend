@@ -35,6 +35,15 @@ define(
 			});
 		};
 
+		/**
+		 * Get a value from local storage.
+		 * @private
+		 */
+		LocalStoragePersistenceProvider.prototype.getValue = function (key) {
+			return this.localStorage[key] ?
+				JSON.parse(this.localStorage[key]) : {};
+		};
+
 		LocalStoragePersistenceProvider.prototype.listSpaces = function () {
 			return this.$q.when(this.spaces);
 		};
@@ -57,6 +66,9 @@ define(
 			}).then(response => {
 				this.localStorage[space] = JSON.stringify(response.data);
 				return response.data[key];
+			}, error => {
+				var spaceObj = this.getValue(space);
+				return spaceObj[key];
 			});
 		};
 
