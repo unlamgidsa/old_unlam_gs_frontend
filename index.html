@@ -100,7 +100,7 @@
       cssClass: 'icon-object'
     });
 
-    const urlBase = 'http://192.168.1.183:8000/API/';
+    const urlBase = 'http://127.0.0.1:8001/API/';
 
     openmct.plugins.SatelliteNames(urlBase + 'SatelliteList').then(satellites => {
       for (let sat of satellites) {
