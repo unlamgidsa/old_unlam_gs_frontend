@@ -6,7 +6,7 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
-    "acorn": "6.2.0",
+    "acorn": ">=6.4.1",
     "angular": "1.7.9",
     "angular-route": "1.4.14",
     "babel-eslint": "8.2.6",
