@@ -1,5 +1,5 @@
-import Vue from 'Vue';
 import HelloWorld from './HelloWorld.vue';
+import Vue from 'vue';
 
 function SimpleVuePlugin() {
     return function install(openmct) {

@@ -43,7 +43,8 @@
 
     openmct.install(openmct.plugins.Espresso());
     openmct.install(openmct.plugins.MyItems());
-    openmct.install(openmct.plugins.LocalStorage());
+    //openmct.install(openmct.plugins.LocalStorage());
+		openmct.install(openmct.plugins.LRStorage("https://proyecto-udemy-german.firebaseio.com/prueba.json"));
     openmct.install(openmct.plugins.Generator());
     openmct.install(openmct.plugins.ExampleImagery());
     openmct.install(openmct.plugins.UTCTimeSystem());
@@ -85,9 +86,11 @@
     openmct.install(openmct.plugins.LADTable());
     openmct.install(openmct.plugins.Filters(['table', 'telemetry.plot.overlay']));
     openmct.install(openmct.plugins.ObjectMigration());
+
     openmct.install(
       openmct.plugins.ClearData(['table', 'telemetry.plot.overlay', 'telemetry.plot.stacked'])
     );
+
 
     openmct.types.addType('sat.telemetry', {
       name: 'Telemetry type',
@@ -112,7 +115,9 @@
           )
         );
       }
-    });
+		}).catch(err => console.log(err));
+
+		openmct.install(openmct.plugins.Login(['new-satellite']));
 
     openmct.install(openmct.plugins.HistoricalTelemetryPlugin(urlBase + 'TlmyVarList/'));
     openmct.start();

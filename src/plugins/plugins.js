@@ -53,7 +53,10 @@ define([
   './UNLaM-plugins/historical-telemetry/plugin',
   './UNLaM-plugins/realtime-telemetry/plugin',
   './UNLaM-plugins/telemetry-dictionary/satellite-names',
-  './themes/snow'
+  './themes/snow',
+  '../../example/simpleVuePlugin/plugin',
+  './login/plugin',
+  './UNLaM-plugins/new-satellite/plugin'
 ], function(
   _,
   UTCTimeSystem,
@@ -87,12 +90,16 @@ define([
   HistoricalTelemtry,
   RealtimeTelemetry,
   SatelliteNames,
-  Snow
+  Snow,
+  SimpleVuePlugin,
+  Login,
+  NewSatellitePlugin
 ) {
   var bundleMap = {
     LocalStorage: 'platform/persistence/local',
     MyItems: 'platform/features/my-items',
-    CouchDB: 'platform/persistence/couch'
+    CouchDB: 'platform/persistence/couch',
+		LRStorage: 'src/plugins/UNLaM-plugins/LRStorage'
   };
 
   var plugins = _.mapValues(bundleMap, function(bundleName, pluginName) {
@@ -110,6 +117,8 @@ define([
 
   plugins.StaticRootPlugin = StaticRootPlugin;
 
+  plugins.SimpleVuePlugin = SimpleVuePlugin.default;
+  plugins.Login = Login;
   /**
    * A tabular view showing the latest values of multiple telemetry points at
    * once. Formatted so that labels and values are aligned.
@@ -193,10 +202,32 @@ define([
   plugins.Espresso = Espresso.default;
   plugins.Maelstrom = Maelstrom.default;
   plugins.Snow = Snow.default;
+
   plugins.TelemetryDictionaryPlugin = TelemetryDictionaryPlugin.default;
   plugins.HistoricalTelemetryPlugin = HistoricalTelemtry.default;
   plugins.RealtimeTelemetryPlugin = RealtimeTelemetry.default;
   plugins.SatelliteNames = SatelliteNames.default;
+  plugins.NewSatellitePlugin = NewSatellitePlugin.default;
+	plugins.LRStorage = function(url) {
+		return function(openmct) {
+			if (url) {
+				var bundleName = 'config/lrstorage';
+				openmct.legacyRegistry.register(bundleName, {
+					extensions: {
+						constants: [
+							{
+								key: 'STORE_PATH',
+								value: url,
+								priority: 'mandatory'
+							}
+						]
+					}
+				});
+				openmct.legacyRegistry.enable(bundleName);
+			}
+			openmct.legacyRegistry.enable(bundleMap.LRStorage);
+		};
+	};
 
-  return plugins;
+	return plugins;
 });
