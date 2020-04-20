@@ -118,7 +118,6 @@
 		}).catch(err => console.log(err));
 
 		openmct.install(openmct.plugins.Login(['new-satellite']));
-    openmct.install(openmct.plugins.NewSatellitePlugin());
 
     openmct.install(openmct.plugins.HistoricalTelemetryPlugin(urlBase + 'TlmyVarList/'));
     openmct.start();
