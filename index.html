@@ -105,17 +105,18 @@
 
     const urlBase = 'http://127.0.0.1:8001/API/';
 
-    openmct.plugins.SatelliteNames(urlBase + 'SatelliteList').then(satellites => {
-      for (let sat of satellites) {
-        openmct.install(
-          openmct.plugins.TelemetryDictionaryPlugin(
-            sat.name,
-            sat.key,
-            urlBase + 'TlmyVarDict/' + sat.name
-          )
-        );
-      }
-		}).catch(err => console.log(err));
+    //openmct.plugins.SatelliteNames(urlBase + 'SatelliteList').then(satellites => {
+    //  for (let sat of satellites) {
+    //    openmct.install(
+    //      openmct.plugins.TelemetryDictionaryPlugin(
+    //        sat.name,
+    //        sat.key,
+    //        urlBase + 'TlmyVarDict/' + sat.name
+    //      )
+    //    );
+    //  }
+		//}).catch(err => console.log(err));
+		openmct.plugins.SatelliteNames(urlBase, 'SatelliteList', 'TlmyVarDict/', openmct);
 
 		openmct.install(openmct.plugins.Login(['new-satellite']));
 
