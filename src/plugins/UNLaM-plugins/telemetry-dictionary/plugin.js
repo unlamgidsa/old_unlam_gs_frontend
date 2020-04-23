@@ -3,8 +3,8 @@ import { CompositionProvider } from './composition.provider.js';
 import { ObjectProvider } from './object.provider.js';
 
 export default function TelemetryDictionaryPlugin(name, key, url) {
-  const namespace = name + '.telemetry';
   return function install(openmct) {
+		const namespace = name + '.telemetry';
     const objects = new ObjectProvider(openmct, namespace, key, url);
     const composition = new CompositionProvider(openmct, namespace, url);
 
