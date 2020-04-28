@@ -21,106 +21,137 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
-    />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title></title>
-    <script src="dist/openmct.js"></script>
-    <link rel="icon" href="dist/favicons/favicon-96x96.ico" sizes="96x96" type="image/x-icon" />
-    <link rel="icon" href="dist/favicons/favicon-32x32.ico" sizes="32x32" type="image/x-icon" />
-    <link rel="icon" href="dist/favicons/favicon-16x16.ico" sizes="16x16" type="image/x-icon" />
-  </head>
-  <body></body>
-  <script>
-    const FIVE_MINUTES = 5 * 60 * 1000;
-    const THIRTY_MINUTES = 30 * 60 * 1000;
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no"
+		/>
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<title></title>
+		<script src="dist/openmct.js"></script>
+		<link
+			rel="icon"
+			href="dist/favicons/favicon-96x96.ico"
+			sizes="96x96"
+			type="image/x-icon"
+		/>
+		<link
+			rel="icon"
+			href="dist/favicons/favicon-32x32.ico"
+			sizes="32x32"
+			type="image/x-icon"
+		/>
+		<link
+			rel="icon"
+			href="dist/favicons/favicon-16x16.ico"
+			sizes="16x16"
+			type="image/x-icon"
+		/>
+	</head>
+	<body></body>
+	<script>
+		const FIVE_MINUTES = 5 * 60 * 1000;
+		const THIRTY_MINUTES = 30 * 60 * 1000;
 
-    ['example/eventGenerator'].forEach(openmct.legacyRegistry.enable.bind(openmct.legacyRegistry));
+		["example/eventGenerator"].forEach(
+			openmct.legacyRegistry.enable.bind(openmct.legacyRegistry)
+		);
 
-    openmct.install(openmct.plugins.Espresso());
-    openmct.install(openmct.plugins.MyItems());
-    //openmct.install(openmct.plugins.LocalStorage());
-		openmct.install(openmct.plugins.LRStorage("https://proyecto-udemy-german.firebaseio.com/prueba.json"));
-    openmct.install(openmct.plugins.Generator());
-    openmct.install(openmct.plugins.ExampleImagery());
-    openmct.install(openmct.plugins.UTCTimeSystem());
-    openmct.install(
-      openmct.plugins.AutoflowView({
-        type: 'telemetry.panel'
-      })
-    );
-    openmct.install(
-      openmct.plugins.DisplayLayout({
-        showAsView: ['summary-widget', 'example.imagery']
-      })
-    );
-    openmct.install(
-      openmct.plugins.Conductor({
-        menuOptions: [
-          {
-            name: 'Fixed',
-            timeSystem: 'utc',
-            bounds: {
-              start: Date.now() - THIRTY_MINUTES,
-              end: Date.now()
-            }
-          },
-          {
-            name: 'Realtime',
-            timeSystem: 'utc',
-            clock: 'local',
-            clockOffsets: {
-              start: -THIRTY_MINUTES,
-              end: FIVE_MINUTES
-            }
-          }
-        ]
-      })
-    );
-    openmct.install(openmct.plugins.SummaryWidget());
-    openmct.install(openmct.plugins.Notebook());
-    openmct.install(openmct.plugins.LADTable());
-    openmct.install(openmct.plugins.Filters(['table', 'telemetry.plot.overlay']));
-    openmct.install(openmct.plugins.ObjectMigration());
+		openmct.install(openmct.plugins.Espresso());
+		openmct.install(openmct.plugins.MyItems());
+		//openmct.install(openmct.plugins.LocalStorage());
+		openmct.install(
+			openmct.plugins.LRStorage(
+				"https://proyecto-udemy-german.firebaseio.com/prueba.json"
+			)
+		);
+		openmct.install(openmct.plugins.Generator());
+		openmct.install(openmct.plugins.ExampleImagery());
+		openmct.install(openmct.plugins.UTCTimeSystem());
+		openmct.install(
+			openmct.plugins.AutoflowView({
+				type: "telemetry.panel"
+			})
+		);
+		openmct.install(
+			openmct.plugins.DisplayLayout({
+				showAsView: ["summary-widget", "example.imagery"]
+			})
+		);
+		openmct.install(
+			openmct.plugins.Conductor({
+				menuOptions: [
+					{
+						name: "Fixed",
+						timeSystem: "utc",
+						bounds: {
+							start: Date.now() - THIRTY_MINUTES,
+							end: Date.now()
+						}
+					},
+					{
+						name: "Realtime",
+						timeSystem: "utc",
+						clock: "local",
+						clockOffsets: {
+							start: -THIRTY_MINUTES,
+							end: FIVE_MINUTES
+						}
+					}
+				]
+			})
+		);
+		openmct.install(openmct.plugins.SummaryWidget());
+		openmct.install(openmct.plugins.Notebook());
+		openmct.install(openmct.plugins.LADTable());
+		openmct.install(
+			openmct.plugins.Filters(["table", "telemetry.plot.overlay"])
+		);
+		openmct.install(openmct.plugins.ObjectMigration());
 
-    openmct.install(
-      openmct.plugins.ClearData(['table', 'telemetry.plot.overlay', 'telemetry.plot.stacked'])
-    );
+		openmct.install(
+			openmct.plugins.ClearData([
+				"table",
+				"telemetry.plot.overlay",
+				"telemetry.plot.stacked"
+			])
+		);
 
+		openmct.types.addType("sat.telemetry", {
+			name: "Telemetry type",
+			description: "Telemetry point for every satellite",
+			cssClass: "icon-telemetry"
+		});
+		openmct.types.addType("satellite", {
+			name: "Satellite folder",
+			description: "Satellite folder where telemetry points will be",
+			cssClass: "icon-object"
+		});
 
-    openmct.types.addType('sat.telemetry', {
-      name: 'Telemetry type',
-      description: 'Telemetry point for every satellite',
-      cssClass: 'icon-telemetry'
-    });
-    openmct.types.addType('satellite', {
-      name: 'Satellite folder',
-      description: 'Satellite folder where telemetry points will be',
-      cssClass: 'icon-object'
-    });
+		const urlBase = "http://127.0.0.1:8001/API/";
 
-    const urlBase = 'http://127.0.0.1:8001/API/';
+		const satNames = async () => {
+			const satellites = await openmct.plugins.SatelliteNames(
+				urlBase + "SatelliteList"
+			);
+			for (let sat of satellites) {
+				openmct.install(
+					openmct.plugins.TelemetryDictionaryPlugin(
+						sat.name,
+						sat.key,
+						urlBase + "TlmyVarDict/" + sat.name
+					)
+				);
+			}
+		};
+		satNames();
 
-    //openmct.plugins.SatelliteNames(urlBase + 'SatelliteList').then(satellites => {
-    //  for (let sat of satellites) {
-    //    openmct.install(
-    //      openmct.plugins.TelemetryDictionaryPlugin(
-    //        sat.name,
-    //        sat.key,
-    //        urlBase + 'TlmyVarDict/' + sat.name
-    //      )
-    //    );
-    //  }
-		//}).catch(err => console.log(err));
-		openmct.plugins.SatelliteNames(urlBase, 'SatelliteList', 'TlmyVarDict/', openmct);
+		openmct.install(openmct.plugins.Login(["new-satellite"]));
 
-		openmct.install(openmct.plugins.Login(['new-satellite']));
-
-    openmct.install(openmct.plugins.HistoricalTelemetryPlugin(urlBase + 'TlmyVarList/'));
-    openmct.start();
-  </script>
+		openmct.install(
+			openmct.plugins.HistoricalTelemetryPlugin(urlBase + "TlmyVarList/")
+		);
+		openmct.start();
+	</script>
 </html>
