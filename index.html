@@ -152,8 +152,9 @@
 		openmct.install(
 			openmct.plugins.HistoricalTelemetryPlugin(urlBase + "TlmyVarList/")
 		);
+		/* workaround. Giving promises time to resolve */
 		setTimeout(_ => {
 			openmct.start();
-		}, 75);
+		}, 100);
 	</script>
 </html>
