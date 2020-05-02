@@ -30,6 +30,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<title></title>
 		<script src="dist/openmct.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<link
 			rel="icon"
 			href="dist/favicons/favicon-96x96.ico"
@@ -48,8 +49,28 @@
 			sizes="16x16"
 			type="image/x-icon"
 		/>
+		<style>
+			#splashscreen {
+				height: 100%;
+				width: 100%;
+				z-index: 99;
+			}
+			.center {
+				display: block;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				margin: auto;
+			}
+		</style>
 	</head>
-	<body></body>
+	<body>
+		<div id="splashscreen">
+			<img class="center" src="dist/favicons/favicon-96x96.ico" alt="" />
+		</div>
+	</body>
 	<script>
 		const FIVE_MINUTES = 5 * 60 * 1000;
 		const THIRTY_MINUTES = 30 * 60 * 1000;
@@ -154,7 +175,8 @@
 		);
 		/* workaround. Giving promises time to resolve */
 		setTimeout(_ => {
+			$("#splashscreen").fadeOut("slow");
 			openmct.start();
-		}, 100);
+		}, 2000);
 	</script>
 </html>
