@@ -25,12 +25,13 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			EventBus.$emit("username", this.username);
+			EventBus.$emit("login", this.username);
+			localStorage.setItem("userData", JSON.stringify(this.username));
 			openmct.overlays.dismissLastOverlay();
 		}
 	},
 	mounted() {
-		EventBus.$on("username-logout", usr => {
+		EventBus.$on("logout", usr => {
 			this.username = usr;
 		});
 	}
