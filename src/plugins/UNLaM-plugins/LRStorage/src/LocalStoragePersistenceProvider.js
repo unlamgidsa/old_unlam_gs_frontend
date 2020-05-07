@@ -1,6 +1,6 @@
 define(
-	[],
-	function () {
+	["../../http-server/service.js"],
+	function (http) {
 
 		/**
 		 * The LocalStoragePersistenceProvider reads and writes JSON documents
@@ -28,11 +28,12 @@ define(
 		 */
 		LocalStoragePersistenceProvider.prototype.setValue = function (key, value) {
 			this.localStorage[key] = JSON.stringify(value);
-			this.$http({
-				method: "PUT",
-				url: this.url,
-				data: value
-			});
+			//this.$http({
+			//	method: "PUT",
+			//	url: this.url,
+			//	data: value
+			//});
+			//http.httpPut(this.url, value).then(res => console.log(res));
 		};
 
 		/**
@@ -60,12 +61,17 @@ define(
 		};
 
 		LocalStoragePersistenceProvider.prototype.readObject = function (space, key) {
-			return this.$http({
+			return this.$http({ // cambiar por el httpGet de http para el usuario
 				method: "GET",
 				url: this.url
 			}).then(response => {
-				this.localStorage[space] = JSON.stringify(response.data);
-				return response.data[key];
+				//this.localStorage[space] = JSON.stringify(response.data);
+				//return response.data[key];
+				let resData = response.data,
+					localData = this.getValue(space),
+					spaceObj = {...localData, ...resData};
+				spaceObj.mine.composition = [...localData.mine.composition, ...resData.mine.composition].unique();
+				return spaceObj[key];
 			}, error => {
 				var spaceObj = this.getValue(space);
 				return spaceObj[key];
@@ -81,6 +87,18 @@ define(
 
 		LocalStoragePersistenceProvider.prototype.updateObject =
 			LocalStoragePersistenceProvider.prototype.createObject;
+
+		Array.prototype.unique = function() {
+    var a = this.concat();
+    for(var i=0; i<a.length; ++i) {
+        for(var j=i+1; j<a.length; ++j) {
+            if(a[i] === a[j])
+                a.splice(j--, 1);
+        }
+    }
+
+    return a;
+};
 
 		return LocalStoragePersistenceProvider;
 	}
