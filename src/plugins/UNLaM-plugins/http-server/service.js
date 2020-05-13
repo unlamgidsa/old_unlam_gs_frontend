@@ -2,7 +2,7 @@ import axios from "axios";
 
 export function httpGet(url) {
 	let user = JSON.parse(localStorage.getItem("userData"));
-	return axios.get(url, { auth: user });
+	return axios.get(url);
 }
 
 export function httpPost(url, data) {
