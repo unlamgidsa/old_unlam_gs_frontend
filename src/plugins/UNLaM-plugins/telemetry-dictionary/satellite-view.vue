@@ -1,7 +1,7 @@
 <template>
 	<div>
-	<div class="example">{{ domainObject.name }}</div>
-	<button @click="foo">Foo</button>
+	<h1>{{ domainObject.name }}</h1>
+	<img src="http://spacebillboard.com/sites/all/themes/sbbtheme/resources/img/meta/cubesat.jpg" alt="" width="100%">
 	</div>
 </template>
 
@@ -12,17 +12,9 @@ export default {
 		return {
 			msg: 'Hello world!'
 		}
-	},
-	methods: {
-		foo: function() {
-			console.log(openmct);
-		}
 	}
 }
 </script>
 
 <style>
-.example {
-	color: red;
-}
 </style>
