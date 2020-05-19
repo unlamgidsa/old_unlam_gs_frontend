@@ -21,6 +21,22 @@ function getProvider(urlBase) {
       var url = `${urlBase}${name}.${domainObject.name}/${options.start}/${options.end}`;
 
       return axios.get(url).then(function(resp) {
+				if (resp.data.length === 0) {
+					// hay que cambiar este hardcodeo cuando este implementado
+					// en el backend.
+					url = `${urlBase}${name}.${domainObject.name}/1531958932000/1539734400000`;
+					return axios.get(url).then(newResp => {
+						let histData = newResp.data;
+						console.log(histData);
+						if (histData.length != 0) {
+							let first = histData[0].timestamp,
+								last = histData[histData.length - 1].timestamp;
+							openmct.time.bounds({start: first, end: last});
+							return histData;
+						}
+								return [];
+					});
+				}
         return resp.data;
       });
     }
