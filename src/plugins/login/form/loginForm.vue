@@ -15,6 +15,7 @@
 
 <script>
 import { EventBus } from "../event-bus.js";
+import * as http from "../../UNLaM-plugins/http-server/service.js";
 export default {
 	inject: ["openmct"],
 	data() {
@@ -25,14 +26,32 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			EventBus.$emit("login", this.username);
-			localStorage.setItem("userData", JSON.stringify(this.username));
+			http
+				.httpGet(urlBase + "api-token-auth", {
+					auth: {
+						username: this.username,
+						password: this.password
+					}
+				})
+				.then(
+					resp => {
+						const token = resp.data.token;
+						localStorage.setItem("userData", JSON.stringify(token));
+						EventBus.$emit("login", this.username);
+					},
+					err => {
+						localStorage.setItem("userData", JSON.stringify({}));
+						// aca habria que poner un cuadro de dialogo
+						// diciendo que no se pudo
+					}
+				);
 			openmct.overlays.dismissLastOverlay();
 		}
 	},
 	mounted() {
 		EventBus.$on("logout", usr => {
 			this.username = usr;
+			localStorage.setItem("userData", JSON.stringify({}));
 		});
 	}
 };
