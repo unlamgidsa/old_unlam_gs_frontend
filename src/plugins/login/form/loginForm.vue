@@ -27,16 +27,14 @@ export default {
 	methods: {
 		onSubmit() {
 			http
-				.httpGet(urlBase + "api-token-auth", {
-					auth: {
-						username: this.username,
-						password: this.password
-					}
-				})
+				.httpPost(urlBase + "api-token-auth/", {username: this.username, password: this.password})
 				.then(
 					resp => {
 						const token = resp.data.token;
-						localStorage.setItem("userData", JSON.stringify(token));
+						localStorage.setItem(
+							"userData",
+							JSON.stringify({ username: this.username, token: token })
+						);
 						EventBus.$emit("login", this.username);
 					},
 					err => {

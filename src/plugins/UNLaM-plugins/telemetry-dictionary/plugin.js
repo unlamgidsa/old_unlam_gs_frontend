@@ -1,4 +1,4 @@
-import axios from 'axios';
+import * as http from "../http-server/service.js";
 import { CompositionProvider } from './composition.provider.js';
 import { ObjectProvider } from './object.provider.js';
 import { ObjectView } from './object-view.js';
@@ -18,5 +18,5 @@ export default function TelemetryDictionaryPlugin(name, key, url) {
 }
 
 export function getDictionary(url) {
-  return axios.get(url).then(data => data.data);
+  return http.httpGet(url).then(data => data.data);
 }

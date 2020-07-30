@@ -1,4 +1,4 @@
-import axios from "axios";
+import * as http from "../http-server/service.js";
 
 export class TelemetryProvider {
 	constructor(openmct, urlBase) {
@@ -21,11 +21,11 @@ function getProvider(urlBase) {
 			var url = `${urlBase}${name}.${domainObject.name}/${options.start}/${options.end}`;
 			url = sanitizeURL(url);
 
-			return axios.get(url).then(function(resp) {
+			return http.httpGet(url).then(function(resp) {
 				if (resp.data.length === 0) {
 					url = `${urlBase}${name}.${domainObject.name}/`;
 
-					return axios.get(url).then(
+					return http.httpGet(url).then(
 						newResp => {
 							let histData = newResp.data,
 								lastData = [];
