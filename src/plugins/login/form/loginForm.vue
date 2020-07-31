@@ -39,6 +39,8 @@ export default {
 					},
 					err => {
 						localStorage.setItem("userData", JSON.stringify({}));
+						console.log("error al iniciar sesion");
+						console.log(err);
 						// aca habria que poner un cuadro de dialogo
 						// diciendo que no se pudo
 					}

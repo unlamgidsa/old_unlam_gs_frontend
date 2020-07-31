@@ -71,7 +71,7 @@
 	</head>
 	<body>
 		<div id="splashscreen">
-				<img class="center" src="dist/images/unlam-logo.svg" alt="" />
+			<img class="center" src="dist/images/unlam-logo.svg" alt="" />
 		</div>
 	</body>
 	<script>
@@ -84,12 +84,6 @@
 
 		openmct.install(openmct.plugins.Espresso());
 		openmct.install(openmct.plugins.MyItems());
-		//openmct.install(openmct.plugins.LocalStorage());
-		openmct.install(
-			openmct.plugins.LRStorage(
-				"https://proyecto-udemy-german.firebaseio.com/prueba.json"
-			)
-		);
 		openmct.install(openmct.plugins.Generator());
 		openmct.install(openmct.plugins.ExampleImagery());
 		openmct.install(openmct.plugins.UTCTimeSystem());
@@ -154,6 +148,8 @@
 		});
 
 		const urlBase = "http://127.0.0.1:8000/API/";
+		openmct.install(openmct.plugins.LRStorage(urlBase + "UserItems"));
+		//openmct.install(openmct.plugins.LocalStorage());
 
 		const satNames = async () => {
 			const satellites = await openmct.plugins.SatelliteNames(

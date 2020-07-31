@@ -8,7 +8,7 @@ define(["../../http-server/service.js"], function(http) {
 	 * @constructor
 	 * @implements {PersistenceService}
 	 * @param q Angular's $q, for promises
-	 * @param $http 
+	 * @param $http
 	 * @param {string} space the name of the persistence space being served
 	 * @param {string} url from the remote storage
 	 */
@@ -28,7 +28,7 @@ define(["../../http-server/service.js"], function(http) {
 	 */
 	LocalStoragePersistenceProvider.prototype.setValue = function(key, value) {
 		this.localStorage[key] = JSON.stringify(value);
-		http.httpPut(this.url, value);
+		if (localStorage.getItem("userData") != {}) http.httpPut(this.url, value);
 	};
 
 	/**
@@ -61,15 +61,22 @@ define(["../../http-server/service.js"], function(http) {
 	LocalStoragePersistenceProvider.prototype.readObject = function(space, key) {
 		return http.httpGet(this.url).then(
 			response => {
-				//this.localStorage[space] = JSON.stringify(response.data);
 				//return response.data[key];
 				let resData = response.data,
-					localData = this.getValue(space),
-					spaceObj = { ...localData, ...resData };
-				spaceObj.mine.composition = [
-					...localData.mine.composition,
-					...resData.mine.composition
-				].unique();
+					localData = this.getValue(space);
+
+				if (resData.hasOwnProperty(length)) resData = JSON.parse(resData);
+
+				let spaceObj = { ...localData, ...resData };
+
+				if (Object.keys(localData).length !== 0) {
+					spaceObj.mine.composition = [
+						...localData.mine.composition,
+						...resData.mine.composition
+					].unique();
+				}
+
+				this.localStorage[space] = JSON.stringify(spaceObj);
 				return spaceObj[key];
 			},
 			error => {

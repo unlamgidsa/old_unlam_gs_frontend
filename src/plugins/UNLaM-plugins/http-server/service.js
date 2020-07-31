@@ -7,10 +7,10 @@ export function httpGet(url) {
 
 export function httpPost(url, data) {
 	let user = JSON.parse(localStorage.getItem("userData"));
-	return axios.get(url, { headers: { Authorization: "Token " + user.token }});
+	return axios.post(url, data, { headers: { Authorization: "Token " + user.token }});
 }
 
 export function httpPut(url, data) {
 	let user = JSON.parse(localStorage.getItem("userData"));
-	return axios.get(url, { headers: { Authorization: "Token " + user.token }});
+	return axios.put(url, data, { headers: { Authorization: "Token " + user.token }});
 }
