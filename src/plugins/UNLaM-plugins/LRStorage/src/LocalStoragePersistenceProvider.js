@@ -27,8 +27,13 @@ define(["../../http-server/service.js"], function(http) {
 	 * @private
 	 */
 	LocalStoragePersistenceProvider.prototype.setValue = function(key, value) {
-		this.localStorage[key] = JSON.stringify(value);
-		if (localStorage.getItem("userData") != {}) http.httpPut(this.url, value);
+		let stringValue = JSON.stringify(value);
+		/* 
+		 * Aca deberia agregar que vaya sacando los items que no se encuentran en
+		 * My Items (ni en ningun otro punto de root).
+		 */
+		this.localStorage[key] = stringValue;
+		if (localStorage.getItem("userData") != {}) http.httpPost(this.url + '/Create', {jsonf: stringValue});
 	};
 
 	/**

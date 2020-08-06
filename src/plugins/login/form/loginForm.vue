@@ -36,16 +36,14 @@ export default {
 							JSON.stringify({ username: this.username, token: token })
 						);
 						EventBus.$emit("login", this.username);
+						openmct.overlays.dismissLastOverlay();
+						window.location.reload(false);
 					},
 					err => {
 						localStorage.setItem("userData", JSON.stringify({}));
-						console.log("error al iniciar sesion");
-						console.log(err);
-						// aca habria que poner un cuadro de dialogo
-						// diciendo que no se pudo
+						window.alert("Hubo un problema al iniciar sesión. Usuario y/o contraseña errónea");
 					}
 				);
-			openmct.overlays.dismissLastOverlay();
 		}
 	},
 	mounted() {
