@@ -35,10 +35,12 @@ export default {
 	},
 	mounted() {
 		let user = JSON.parse(localStorage.getItem("userData"));
-		if (typeof user.username === "string") {
+		if (user != null && user.hasOwnProperty("username") && typeof user.username === "string") {
 			this.username = user.username;
 			this.isLogged = true;
 		}
+		else
+			localStorage.setItem("userData", JSON.stringify({}));
 		EventBus.$on("login", usr => {
 			this.username = usr;
 			this.isLogged = true;

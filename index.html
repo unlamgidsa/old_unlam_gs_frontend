@@ -148,6 +148,7 @@
 		});
 
 		const urlBase = "http://127.0.0.1:8000/API/";
+		openmct.install(openmct.plugins.Login(["new-satellite"]));
 		openmct.install(openmct.plugins.LRStorage(urlBase + "UserItems"));
 		//openmct.install(openmct.plugins.LocalStorage());
 
@@ -167,7 +168,6 @@
 		};
 		satNames();
 
-		openmct.install(openmct.plugins.Login(["new-satellite"]));
 
 		openmct.install(
 			openmct.plugins.HistoricalTelemetryPlugin(urlBase + "TlmyVarList/")
