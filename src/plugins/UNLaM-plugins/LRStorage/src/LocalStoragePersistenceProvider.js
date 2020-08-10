@@ -74,7 +74,7 @@ define(["../../http-server/service.js"], function(http) {
 
 				let spaceObj = { ...localData, ...resData };
 
-				if (Object.keys(localData).length !== 0) {
+				if (Object.keys(resData).length != 0 && Object.keys(localData).length !== 0) {
 					spaceObj.mine.composition = [
 						...localData.mine.composition,
 						...resData.mine.composition

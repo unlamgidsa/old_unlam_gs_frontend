@@ -147,7 +147,8 @@
 			cssClass: "icon-object"
 		});
 
-		const urlBase = "http://127.0.0.1:8000/API/";
+		//const urlBase = "http://127.0.0.1:8000/API/";
+		const urlBase = "http://ugs.southcentralus.cloudapp.azure.com:8001/API/";
 		openmct.install(openmct.plugins.Login(["new-satellite"]));
 		openmct.install(openmct.plugins.LRStorage(urlBase + "UserItems"));
 		//openmct.install(openmct.plugins.LocalStorage());
