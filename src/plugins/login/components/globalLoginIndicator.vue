@@ -12,6 +12,7 @@
 
 <script>
 import showForm from "../form/form.js";
+import { getAndSetToken } from "../form/form.js";
 import { EventBus } from "../event-bus.js";
 
 export default {
@@ -35,12 +36,23 @@ export default {
 	},
 	mounted() {
 		let user = JSON.parse(localStorage.getItem("userData"));
-		if (user != null && user.hasOwnProperty("username") && typeof user.username === "string") {
+		if (
+			user != null &&
+			user.hasOwnProperty("username") &&
+			typeof user.username === "string"
+		) {
 			this.username = user.username;
 			this.isLogged = true;
+		} else {
+			/* hardcodeo el usuario anonimo */
+			getAndSetToken("anonym", "anonym")
+				.then(resp => {
+					window.location.reload(false);
+				})
+				.catch(err => {
+					localStorage.setItem("userData", JSON.stringify({}));
+				});
 		}
-		else
-			localStorage.setItem("userData", JSON.stringify({}));
 		EventBus.$on("login", usr => {
 			this.username = usr;
 			this.isLogged = true;

@@ -15,7 +15,7 @@
 
 <script>
 import { EventBus } from "../event-bus.js";
-import * as http from "../../UNLaM-plugins/http-server/service.js";
+import { getAndSetToken } from "./form.js";
 export default {
 	inject: ["openmct"],
 	data() {
@@ -26,24 +26,19 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			http
-				.httpPost(urlBase + "api-token-auth/", {username: this.username, password: this.password})
-				.then(
-					resp => {
-						const token = resp.data.token;
-						localStorage.setItem(
-							"userData",
-							JSON.stringify({ username: this.username, token: token })
-						);
-						EventBus.$emit("login", this.username);
-						openmct.overlays.dismissLastOverlay();
-						window.location.reload(false);
-					},
-					err => {
-						localStorage.setItem("userData", JSON.stringify({}));
-						window.alert("Hubo un problema al iniciar sesión. Usuario y/o contraseña errónea");
-					}
-				);
+			getAndSetToken(this.username, this.password).then(
+				resp => {
+					EventBus.$emit("login", this.username);
+					openmct.overlays.dismissLastOverlay();
+					window.location.reload(false);
+				},
+				err => {
+					localStorage.setItem("userData", JSON.stringify({}));
+					window.alert(
+						"Hubo un problema al iniciar sesión. Usuario y/o contraseña errónea"
+					);
+				}
+			);
 		}
 	},
 	mounted() {

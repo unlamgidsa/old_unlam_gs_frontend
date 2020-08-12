@@ -28,12 +28,13 @@ define(["../../http-server/service.js"], function(http) {
 	 */
 	LocalStoragePersistenceProvider.prototype.setValue = function(key, value) {
 		let stringValue = JSON.stringify(value);
-		/* 
+		/*
 		 * Aca deberia agregar que vaya sacando los items que no se encuentran en
 		 * My Items (ni en ningun otro punto de root).
 		 */
 		this.localStorage[key] = stringValue;
-		if (localStorage.getItem("userData") != {}) http.httpPost(this.url + '/Create', {jsonf: stringValue});
+		if (localStorage.getItem("userData") != {})
+			http.httpPost(this.url + "/Create", { jsonf: stringValue });
 	};
 
 	/**
@@ -66,15 +67,18 @@ define(["../../http-server/service.js"], function(http) {
 	LocalStoragePersistenceProvider.prototype.readObject = function(space, key) {
 		return http.httpGet(this.url).then(
 			response => {
-				//return response.data[key];
 				let resData = response.data,
 					localData = this.getValue(space);
 
-				if (resData.hasOwnProperty(length)) resData = JSON.parse(resData);
+				if (resData.hasOwnProperty(length) && resData.length != 0)
+					resData = JSON.parse(resData);
 
 				let spaceObj = { ...localData, ...resData };
 
-				if (Object.keys(resData).length != 0 && Object.keys(localData).length !== 0) {
+				if (
+					Object.keys(resData).length != 0 &&
+					Object.keys(localData).length !== 0
+				) {
 					spaceObj.mine.composition = [
 						...localData.mine.composition,
 						...resData.mine.composition
