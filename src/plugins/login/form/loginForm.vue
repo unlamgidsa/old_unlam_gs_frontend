@@ -15,7 +15,7 @@
 
 <script>
 import { EventBus } from "../event-bus.js";
-import { getAndSetToken } from "./form.js";
+import { getAndSetToken, logOut } from "../login-functions.js";
 export default {
 	inject: ["openmct"],
 	data() {
@@ -33,7 +33,7 @@ export default {
 					window.location.reload(false);
 				},
 				err => {
-					localStorage.setItem("userData", JSON.stringify({}));
+					logOut();
 					window.alert(
 						"Hubo un problema al iniciar sesión. Usuario y/o contraseña errónea"
 					);
@@ -44,7 +44,7 @@ export default {
 	mounted() {
 		EventBus.$on("logout", usr => {
 			this.username = usr;
-			localStorage.setItem("userData", JSON.stringify({}));
+			logOut();
 		});
 	}
 };

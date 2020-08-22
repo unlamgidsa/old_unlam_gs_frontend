@@ -1,4 +1,4 @@
-define(["../../http-server/service.js"], function(http) {
+define(["../../http-server/service.js", "../../../login/login-functions.js"], function(http, login) {
 	/**
 	 * The LocalStoragePersistenceProvider reads and writes JSON documents
 	 * (more specifically, domain object models) to/from the browser's
@@ -33,7 +33,7 @@ define(["../../http-server/service.js"], function(http) {
 		 * My Items (ni en ningun otro punto de root).
 		 */
 		this.localStorage[key] = stringValue;
-		if (localStorage.getItem("userData") != {})
+		if (login.isUserLoggedIn() && !isUserAnonym())
 			http.httpPost(this.url + "/Create", { jsonf: stringValue });
 	};
 

@@ -3,7 +3,11 @@
 		<span class="label c-indicator__label">
 			<div v-if="isLogged">
 				<span> {{ username }} </span>
-				<button class="icon-x" style="margin: auto;" @click="logOut"></button>
+				<button
+					class="icon-x"
+					style="margin: auto;"
+					@click="initLogOut"
+				></button>
 			</div>
 			<button v-else @click="globalLoginEmit">Change user</button>
 		</span>
@@ -12,7 +16,7 @@
 
 <script>
 import showForm from "../form/form.js";
-import { getAndSetToken } from "../form/form.js";
+import { getAndSetToken, logOut, isUserLoggedIn, logAnonymUser, getUserData } from "../login-functions.js";
 import { EventBus } from "../event-bus.js";
 
 export default {
@@ -21,10 +25,10 @@ export default {
 		globalLoginEmit() {
 			showForm(openmct);
 		},
-		logOut() {
+		initLogOut() {
 			this.isLogged = false;
 			this.username = "Change user";
-			localStorage.setItem("userData", JSON.stringify({}));
+			logOut();
 			EventBus.$emit("logout", "");
 		}
 	},
@@ -35,22 +39,17 @@ export default {
 		};
 	},
 	mounted() {
-		let user = JSON.parse(localStorage.getItem("userData"));
-		if (
-			user != null &&
-			user.hasOwnProperty("username") &&
-			typeof user.username === "string"
-		) {
+		let user = getUserData();
+		if (isUserLoggedIn()) {
 			this.username = user.username;
 			this.isLogged = true;
 		} else {
-			/* hardcodeo el usuario anonimo */
-			getAndSetToken("anonym", "anonym")
+			logAnonymUser()
 				.then(resp => {
 					window.location.reload(false);
 				})
 				.catch(err => {
-					localStorage.setItem("userData", JSON.stringify({}));
+					logOut();
 				});
 		}
 		EventBus.$on("login", usr => {
