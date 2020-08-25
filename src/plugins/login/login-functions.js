@@ -1,7 +1,12 @@
 import * as http from "../UNLaM-plugins/http-server/service.js";
 
 export function getUserData() {
-	return JSON.parse(localStorage.getItem("userData"));
+	let user = JSON.parse(localStorage.getItem("userData"));
+	if (user == null) {
+		localStorage.setItem("userData", JSON.stringify({}));	
+		user = {};
+	}
+	return user;
 }
 
 export function getAndSetToken(username, password) {
